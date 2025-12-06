@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel do Criador</title>
+    <link rel="stylesheet" href="criador.css">
+</head>
+<body>
+
+<h1>🎧 Painel do Criador</h1>
+
+<div class="section">
+    <h2>📊 Estatísticas do Site</h2>
+    <p>Total de usuários: <strong>2</strong></p>
+    <p>Total de músicas: <strong>4</strong></p>
+    <p>Músicas mais tocadas: <strong>"Largado as Traças"</strong></p>
+</div>
+
+<div class="section">
+    <h2>➕ Adicionar Nova Música</h2>
+    <input type="text" id="novaMusica" placeholder="Nome da música">
+    <button onclick="adicionarMusica()">Adicionar</button>
+    <ul id="listaMusicas"></ul>
+</div>
+
+<div class="section" id="playlist">
+    <h2>🎵 Playlist Atual</h2>
+    <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+</div>
+
+<div class="section" id="sugestoes">
+    <h2>💬 Sugestões de Usuários</h2>
+    <ul>
+        <li>Adicionar modo escuro/claridade automática</li>
+        <li>Permitir criar playlists personalizadas</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>🚪 Logout</h2>
+    <button onclick="logout()">Sair do Painel</button>
+</div>
+
+<script src="criador.js"></script>
+
+</body>
+</html>

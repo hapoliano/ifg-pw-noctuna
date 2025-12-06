@@ -1,0 +1,116 @@
+:root {
+  --roxo: #c084fc;
+  --roxo-escuro: #7e22ce;
+  --fundo: #121212;
+  --card: #1e1e2e;
+  --cinza: #aaaaaa;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--fundo);
+  color: white;
+}
+
+header {
+  background-color: #1b1b1b;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 28px;
+  color: var(--roxo);
+  font-weight: bold;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 16px;
+}
+
+nav a:hover {
+  color: var(--roxo);
+}
+
+.playlist-header {
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  gap: 30px;
+  background: linear-gradient(to right, #1e1e2e, #27272a);
+}
+
+.playlist-header img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.playlist-info {
+  max-width: 600px;
+}
+
+.playlist-info h1 {
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: var(--roxo);
+}
+
+.playlist-info p {
+  color: var(--cinza);
+  font-size: 16px;
+}
+
+main {
+  padding: 40px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.music-item {
+  background-color: var(--card);
+  padding: 20px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+}
+
+.music-item:hover {
+  transform: scale(1.02);
+}
+
+.music-item h3 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--roxo);
+}
+
+.music-item p {
+  margin: 5px 0 10px;
+  font-size: 14px;
+  color: var(--cinza);
+}
+
+audio {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 8px;
+  background-color: #333;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #1b1b1b;
+  color: #999;
+  margin-top: 60px;
+}

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações - Noctuna</title>
+  <link rel="stylesheet" href="settings-style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="logo">🎧 Noctuna</div>
+    <div class="header-title">Configurações</div>
+  </header>
+
+  <div class="settings-section">
+    <h2>🎵 Reprodução</h2>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-info">
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Reprodução Automática</div>
+          <div class="setting-description">Continue ouvindo músicas similares</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="autoplay" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Crossfade</div>
+          <div class="setting-description">Transição suave entre músicas</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="crossfade">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Equalizar Volume</div>
+          <div class="setting-description">Manter o mesmo volume em todas as músicas</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="normalize" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Volume</div>
+          <div class="setting-description">Volume padrão de reprodução</div>
+        </div>
+        <div class="slider-container">
+          <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="80">
+          <span class="volume-value" id="volumeValue">80%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notificações -->
+  <div class="settings-section">
+    <h2>🔔 Notificações</h2>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Lançamentos de Artistas</div>
+          <div class="setting-description">Novos álbuns e singles</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="notifArtists" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Playlists Atualizadas</div>
+          <div class="setting-description">Quando suas playlists receberem novas músicas</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="notifPlaylists" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Recomendações Diárias</div>
+          <div class="setting-description">Sugestões personalizadas</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="notifRecommendations">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Novidades do Noctuna</div>
+          <div class="setting-description">Novos recursos e atualizações</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="notifNews" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacidade -->
+  <div class="settings-section">
+    <h2>🔒 Privacidade</h2>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Perfil Público</div>
+          <div class="setting-description">Permitir que outros vejam seu perfil</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="publicProfile" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Mostrar Atividade</div>
+          <div class="setting-description">Exibir o que você está ouvindo</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="showActivity">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Playlists Privadas</div>
+          <div class="setting-description">Ocultar suas playlists por padrão</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="privatePlaylists">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Dados de Uso</div>
+          <div class="setting-description">Ajudar a melhorar o Noctuna</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="analytics" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aparência -->
+  <div class="settings-section">
+    <h2>🎨 Aparência</h2>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Tema</div>
+          <div class="setting-description">Escolha o tema da interface</div>
+        </div>
+        <select class="setting-select" id="theme">
+          <option value="dark" selected>Escuro</option>
+          <option value="light">Claro</option>
+          <option value="auto">Automático</option>
+        </select>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Cor de Destaque</div>
+          <div class="setting-description">Cor principal do app</div>
+        </div>
+        <div class="color-picker">
+          <button class="color-option active" data-color="purple" style="background: linear-gradient(135deg, #d946ef, #a855f7);"></button>
+          <button class="color-option" data-color="blue" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);"></button>
+          <button class="color-option" data-color="green" style="background: linear-gradient(135deg, #10b981, #059669);"></button>
+          <button class="color-option" data-color="red" style="background: linear-gradient(135deg, #ef4444, #dc2626);"></button>
+          <button class="color-option" data-color="orange" style="background: linear-gradient(135deg, #f59e0b, #d97706);"></button>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Animações</div>
+          <div class="setting-description">Efeitos visuais e transições</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="animations" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Exibir Letra</div>
+          <div class="setting-description">Mostrar letra sincronizada automaticamente</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="showLyrics" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Download -->
+  <div class="settings-section">
+    <h2>📥 Download e Armazenamento</h2>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Download Automático</div>
+          <div class="setting-description">Baixar músicas para ouvir offline</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="autoDownload">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Download via Dados Móveis</div>
+          <div class="setting-description">Permitir downloads usando internet móvel</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="mobileDownload">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Qualidade de Download</div>
+          <div class="setting-description">Qualidade dos arquivos offline</div>
+        </div>
+        <select class="setting-select" id="downloadQuality">
+          <option value="medium">Normal (160 kbps)</option>
+          <option value="high" selected>Alta (320 kbps)</option>
+          <option value="lossless">Lossless (FLAC)</option>
+        </select>
+      </div>
+
+      <div class="setting-item storage-item">
+        <div class="setting-info">
+          <div class="setting-label">Armazenamento Usado</div>
+          <div class="setting-description">2.8 GB de músicas baixadas</div>
+        </div>
+        <button class="clear-btn">Limpar Cache</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ações -->
+  <div class="settings-section danger-section">
+    <h2>⚠️ Zona de Perigo</h2>
+    <div class="settings-grid">
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Sair de Todos os Dispositivos</div>
+          <div class="setting-description">Desconectar de todas as sessões ativas</div>
+        </div>
+        <button class="danger-btn" id="logoutAll">Sair</button>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-info">
+          <div class="setting-label">Excluir Conta</div>
+          <div class="setting-description">Remover permanentemente sua conta</div>
+        </div>
+        <button class="danger-btn" id="deleteAccount">Excluir</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-section">
+    <button class="save-btn" id="saveBtn">💾 Salvar Alterações</button>
+  </div>
+</div>
+
+<script src="configuracoes.js"></script></body>
+</html>
