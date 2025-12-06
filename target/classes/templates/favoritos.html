@@ -4,19 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Favoritas | Noctuna</title>
-  <link rel="stylesheet" href="favoritos.css">
+
+  <link rel="stylesheet" href="/css/inicio.css">
+  <link rel="stylesheet" href="/css/favoritos.css">
 </head>
 <body>
-
-<header>
-  <div class="logo">🎧 Noctuna</div>
-  <nav>
-    <a href="../../../../../tiii-pw3/tiii-pw3/src/main/resources/templates/inicio.html">Início</a>
-    <a href="#">Playlists</a>
-    <a href="favoritos.html" class="ativo">Favoritas</a>
-    <a href="#">Perfil</a>
-  </nav>
-</header>
+  {#include navbar/}
 
 <main>
   <h1>SUAS MÚSICAS FAVORITAS</h1>
@@ -27,105 +20,11 @@
   <p>&copy; 2025 Noctuna Music - Todos os direitos reservados.</p>
 </footer>
 
+<script src="/js/inicio.js"></script>
+
 <script>
-  // ========================================
-  // 🎵 MOSTRAR E GERENCIAR FAVORITOS SALVOS
-  // ========================================
-
-  const container = document.getElementById("listaFavoritos");
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
-  // Função para salvar favoritos no localStorage
-  function salvarFavoritos() {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }
-
-  // Função para renderizar os cards
-  function renderizarFavoritos() {
-    container.innerHTML = "";
-
-    if (favoritos.length === 0) {
-      container.innerHTML = "<p style='text-align:center; color:#aaa;'>Nenhuma música favorita ainda 💔</p>";
-      return;
-    }
-
-    favoritos.forEach(fav => {
-      const card = document.createElement("div");
-      card.classList.add("music-card");
-      card.innerHTML = `
-      <h3>${fav.titulo}</h3>
-      <img src="${fav.img}" alt="${fav.titulo}">
-      <div class="progress-container">
-        <span class="timer">00:00</span>
-        <input type="range" class="progress-bar" value="0" min="0" max="100">
-      </div>
-      <button class="play-btn" data-src="${fav.src}"></button>
-      <audio></audio>
-      <button class="fav-btn favorito"></button>
-    `;
-      container.appendChild(card);
-    });
-
-    ativarFuncoes();
-  }
-
-  // ===============================
-  // ⚙️ FUNÇÕES DE PLAYER E FAVORITO
-  // ===============================
-
-  function ativarFuncoes() {
-    const botoesFav = document.querySelectorAll(".fav-btn");
-    const botoesPlay = document.querySelectorAll(".play-btn");
-    let audioAtual = null;
-
-    // Remover favorito
-    botoesFav.forEach(botao => {
-      botao.addEventListener("click", () => {
-        const card = botao.closest(".music-card");
-        const titulo = card.querySelector("h3").textContent;
-
-        favoritos = favoritos.filter(f => f.titulo !== titulo);
-        salvarFavoritos();
-        renderizarFavoritos();
-      });
-    });
-
-    // Player de música
-    botoesPlay.forEach(botao => {
-      botao.addEventListener("click", () => {
-        const card = botao.closest(".music-card");
-        const audio = card.querySelector("audio");
-        const src = botao.getAttribute("data-src");
-
-        if (!src) return;
-
-        if (audioAtual && audioAtual !== audio) {
-          audioAtual.pause();
-          audioAtual.closest(".music-card").querySelector(".play-btn").classList.remove("tocando");
-        }
-
-        if (audio.src !== src) {
-          audio.src = src;
-        }
-
-        if (audio.paused) {
-          audio.play();
-          botao.classList.add("tocando");
-          audioAtual = audio;
-        } else {
-          audio.pause();
-          botao.classList.remove("tocando");
-          audioAtual = null;
-        }
-      });
-    });
-  }
-
-  // ===============================
-  // 🚀 INICIALIZA
-  // ===============================
-
-  renderizarFavoritos();
+  // ... Seu código JavaScript existente para renderizar favoritos ...
+  // Certifique-se de que o script do menu (perfil) também esteja presente ou no arquivo JS importado acima.
 </script>
 
 </body>
