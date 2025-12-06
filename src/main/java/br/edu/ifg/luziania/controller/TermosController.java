@@ -1,24 +1,23 @@
 package br.edu.ifg.luziania.controller;
 
-import io.quarkus.qute.CheckedTemplate;
-import io.quarkus.qute.TemplateInstance;
+import io.quarkus.qute.Template;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/termos")
 public class TermosController {
 
-    @CheckedTemplate
-    public static class Templates {
-        public static native TemplateInstance termos();
-    }
+    @Inject
+    Template termos;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public TemplateInstance get() {
-        return Templates.termos();
+    public Response get() {
+        return Response.ok(termos.instance()).build();
     }
 
 }
