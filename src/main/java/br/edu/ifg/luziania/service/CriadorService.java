@@ -1,6 +1,6 @@
 package br.edu.ifg.luziania.service;
 
-import br.edu.ifg.luziania.dto.MusicaDTO;
+import br.edu.ifg.luziania.model.dto.MusicaDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;

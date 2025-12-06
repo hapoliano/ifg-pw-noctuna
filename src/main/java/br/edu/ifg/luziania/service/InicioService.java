@@ -1,6 +1,6 @@
 package br.edu.ifg.luziania.service;
 
-import com.seuprojeto.dto.UsuarioDTO;
+import br.edu.ifg.luziania.model.dto.UsuarioDTO;
 import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped

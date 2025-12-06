@@ -1,5 +1,6 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.dto.UsuarioDTO;
 import br.edu.ifg.luziania.service.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -16,7 +17,7 @@ public class UsuarioController {
     @Path("/cadastrar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrarUsuario(com.seuprojeto.dto.UsuarioDTO usuarioDTO) {
+    public Response cadastrarUsuario(UsuarioDTO usuarioDTO) {
         boolean sucesso = usuarioService.cadastrarUsuario(usuarioDTO);
 
         if (sucesso) {

@@ -1,4 +1,4 @@
-package br.edu.ifg.luziania.dto;
+package br.edu.ifg.luziania.model.dto;
 
 import java.util.Date;
 

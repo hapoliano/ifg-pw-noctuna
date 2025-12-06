@@ -1,6 +1,6 @@
 package br.edu.ifg.luziania.controller;
 
-import br.edu.ifg.luziania.dto.LoginDTO;
+import br.edu.ifg.luziania.model.dto.LoginDTO;
 import br.edu.ifg.luziania.service.LoginService;
 import io.quarkus.qute.Template;
 import jakarta.inject.Inject;

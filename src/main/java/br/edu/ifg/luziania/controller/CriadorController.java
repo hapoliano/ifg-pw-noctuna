@@ -1,6 +1,6 @@
 package br.edu.ifg.luziania.controller;
 
-import br.edu.ifg.luziania.dto.MusicaDTO;
+import br.edu.ifg.luziania.model.dto.MusicaDTO;
 import br.edu.ifg.luziania.service.CriadorService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;

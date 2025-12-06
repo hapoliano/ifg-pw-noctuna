@@ -1,36 +1,33 @@
 package br.edu.ifg.luziania.service;
 
-import br.edu.ifg.luziania.dto.Usuario;
-import com.seuprojeto.dto.UsuarioDTO;
+ // Importe a nova entidade
+ // Verifique o pacote correto do seu DTO
+import br.edu.ifg.luziania.model.dto.UsuarioDTO;
+import br.edu.ifg.luziania.model.entity.Usuario;
 import jakarta.enterprise.context.ApplicationScoped;
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.transaction.Transactional; // Importante!
 
 @ApplicationScoped
 public class UsuarioService {
 
-    private List<Usuario> usuarios = new ArrayList<>();
-
-    public UsuarioService() {
-        usuarios.add(new Usuario("Admin", "admin@teste.com", "123456", "1234"));
-    }
-
+    @Transactional // Abre uma transação no banco para salvar
     public boolean cadastrarUsuario(UsuarioDTO usuarioDTO) {
-        for (Usuario u : usuarios) {
-            if (u.getMail().equals(usuarioDTO.getEmail())) {
-                return false;
-            }
+
+        // Verifica no banco se o email já existe
+        if (Usuario.findByEmail(usuarioDTO.getEmail()) != null) {
+            return false; // Email já cadastrado
         }
 
-        Usuario novoUsuario = new Usuario(
-                usuarioDTO.getNome(),
-                usuarioDTO.getEmail(),
-                usuarioDTO.getPlanoAtual(),
-                usuarioDTO.getSenha()
-        );
-        usuarios.add(novoUsuario);
+        // Cria o usuário e preenche os dados
+        Usuario novoUsuario = new Usuario();
+        novoUsuario.nome = usuarioDTO.getNome();
+        novoUsuario.email = usuarioDTO.getEmail();
+        novoUsuario.senha = usuarioDTO.getSenha();
+        novoUsuario.planoAtual = usuarioDTO.getPlanoAtual();
+
+        // Salva no PostgreSQL
+        novoUsuario.persist();
+
         return true;
     }
-
 }
-
