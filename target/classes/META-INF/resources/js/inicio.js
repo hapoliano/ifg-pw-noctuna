@@ -1,4 +1,6 @@
 <script>
+  document.addEventListener("DOMContentLoaded", () => {
+
   // ===============================
   // 🔘 MENU DE PERFIL
   // ===============================
@@ -6,25 +8,21 @@
   const menuPerfil = document.getElementById('menuPerfil');
 
   if (perfil && menuPerfil) {
-    perfil.addEventListener('click', function(e) {
-      console.log('Clicou no perfil!'); // DEBUG
-      e.stopPropagation();
-      menuPerfil.classList.toggle('ativo');
-    });
 
-    // Fechar menu ao clicar fora
-    document.addEventListener('click', function(e) {
-      if (!perfil.contains(e.target)) {
-        menuPerfil.classList.remove('ativo');
-      }
-    });
+  perfil.addEventListener('click', function (e) {
+  e.stopPropagation();
+  menuPerfil.classList.toggle('ativo');
+});
 
-    menuPerfil.addEventListener('click', function(e) {
-      e.stopPropagation();
-    });
-  } else {
-    console.error('Elementos perfil ou menuPerfil não encontrados!');
-  }
+  document.addEventListener('click', function (e) {
+  if (!perfil.contains(e.target) && !menuPerfil.contains(e.target)) {
+  menuPerfil.classList.remove('ativo');
+}
+});
+
+} else {
+  console.error('Elementos #perfil ou #menuPerfil não encontrados!');
+}
 
   // ===============================
   // ❤️ SISTEMA DE FAVORITOS
@@ -32,47 +30,52 @@
   const botoesFavorito = document.querySelectorAll(".fav-btn");
 
   function salvarFavoritos(favoritos) {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-  }
+  localStorage.setItem("favoritos", JSON.stringify(favoritos));
+}
 
   function carregarFavoritos() {
-    return JSON.parse(localStorage.getItem("favoritos")) || [];
-  }
+  return JSON.parse(localStorage.getItem("favoritos")) || [];
+}
 
   function atualizarEstadoFavorito() {
-    const favoritos = carregarFavoritos();
-    document.querySelectorAll(".music-card").forEach(card => {
-      const titulo = card.querySelector("h3").textContent;
-      const btn = card.querySelector(".fav-btn");
-      if (favoritos.some(f => f.titulo === titulo)) {
-        btn.classList.add("favorito");
-      } else {
-        btn.classList.remove("favorito");
-      }
-    });
-  }
+  const favoritos = carregarFavoritos();
+  document.querySelectorAll(".music-card").forEach(card => {
+  const titulo = card.querySelector("h3").textContent;
+  const btn = card.querySelector(".fav-btn");
+
+  if (!btn) return;
+
+  if (favoritos.some(f => f.titulo === titulo)) {
+  btn.classList.add("favorito");
+} else {
+  btn.classList.remove("favorito");
+}
+});
+}
 
   botoesFavorito.forEach(botao => {
-    botao.addEventListener("click", () => {
-      const card = botao.closest(".music-card");
-      const titulo = card.querySelector("h3").textContent;
-      const img = card.querySelector("img").getAttribute("src");
-      const src = card.querySelector(".play-btn").getAttribute("data-src");
+  botao.addEventListener("click", () => {
+  const card = botao.closest(".music-card");
+  if (!card) return;
 
-      let favoritos = carregarFavoritos();
-      const jaExiste = favoritos.some(f => f.titulo === titulo);
+  const titulo = card.querySelector("h3").textContent;
+  const img = card.querySelector("img")?.src;
+  const src = card.querySelector(".play-btn")?.getAttribute("data-src");
 
-      if (jaExiste) {
-        favoritos = favoritos.filter(f => f.titulo !== titulo);
-        botao.classList.remove("favorito");
-      } else {
-        favoritos.push({ titulo, img, src });
-        botao.classList.add("favorito");
-      }
+  let favoritos = carregarFavoritos();
+  const jaExiste = favoritos.some(f => f.titulo === titulo);
 
-      salvarFavoritos(favoritos);
-    });
-  });
+  if (jaExiste) {
+  favoritos = favoritos.filter(f => f.titulo !== titulo);
+  botao.classList.remove("favorito");
+} else {
+  favoritos.push({ titulo, img, src });
+  botao.classList.add("favorito");
+}
+
+  salvarFavoritos(favoritos);
+});
+});
 
   // ===============================
   // 🎵 PLAYER DE MÚSICAS
@@ -81,33 +84,41 @@
   let audioAtual = null;
 
   botoesPlay.forEach(botao => {
-    botao.addEventListener("click", () => {
-      const card = botao.closest(".music-card");
-      const audio = card.querySelector("audio");
-      const src = botao.getAttribute("data-src");
+  botao.addEventListener("click", () => {
+  const card = botao.closest(".music-card");
+  if (!card) return;
 
-      if (!src) return;
+  const audio = card.querySelector("audio");
+  const src = botao.getAttribute("data-src");
 
-      if (audioAtual && audioAtual !== audio) {
-        audioAtual.pause();
-        audioAtual.closest(".music-card").querySelector(".play-btn").classList.remove("tocando");
-      }
+  if (!audio || !src) return;
 
-      if (audio.src !== src) {
-        audio.src = src;
-      }
+  // Pausa áudio anterior
+  if (audioAtual && audioAtual !== audio) {
+  audioAtual.pause();
+  const botaoAnterior = audioAtual.closest(".music-card").querySelector(".play-btn");
+  if (botaoAnterior) botaoAnterior.classList.remove("tocando");
+}
 
-      if (audio.paused) {
-        audio.play();
-        botao.classList.add("tocando");
-        audioAtual = audio;
-      } else {
-        audio.pause();
-        botao.classList.remove("tocando");
-        audioAtual = null;
-      }
-    });
-  });
+  // Troca a música
+  if (audio.src !== src) {
+  audio.src = src;
+}
 
-  document.addEventListener("DOMContentLoaded", atualizarEstadoFavorito);
+  // Play/Pause
+  if (audio.paused) {
+  audio.play();
+  botao.classList.add("tocando");
+  audioAtual = audio;
+} else {
+  audio.pause();
+  botao.classList.remove("tocando");
+  audioAtual = null;
+}
+});
+});
+
+  atualizarEstadoFavorito();
+
+}); // ← FECHAMENTO DO DOMContentLoaded
 </script>
