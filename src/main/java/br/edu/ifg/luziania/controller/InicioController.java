@@ -1,6 +1,7 @@
 package br.edu.ifg.luziania.controller;
 
 import br.edu.ifg.luziania.service.InicioService;
+import io.quarkus.qute.Template;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -10,20 +11,12 @@ import jakarta.ws.rs.core.Response;
 public class InicioController {
 
     @Inject
-    InicioService inicioService;
+    Template inicio;
 
 
     @GET
-    @Path("/usuario")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getUsuario(@QueryParam("email") String email) {
-        com.seuprojeto.dto.UsuarioDTO usuario = inicioService.getUsuarioLogado(email);
-        if (usuario != null) {
-            return Response.ok(usuario).build();
-        } else {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"mensagem\":\"Usuário não encontrado\"}")
-                    .build();
-        }
+    @Produces(MediaType.TEXT_HTML)
+    public Response get() {
+        return Response.ok(inicio.instance()).build();
     }
 }

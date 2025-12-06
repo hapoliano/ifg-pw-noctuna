@@ -1,4 +1,4 @@
-package com.seuprojeto.controller;
+package br.edu.ifg.luziania.controller;
 
 import br.edu.ifg.luziania.dto.LoginDTO;
 import br.edu.ifg.luziania.service.LoginService;
