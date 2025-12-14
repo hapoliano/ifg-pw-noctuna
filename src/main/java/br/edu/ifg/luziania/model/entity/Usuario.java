@@ -1,22 +1,23 @@
 package br.edu.ifg.luziania.model.entity;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import java.time.LocalDate; // Usaremos LocalDate para data
 
-@Entity // Isso diz ao Quarkus que esta classe é uma tabela
+@Entity
 public class Usuario extends PanacheEntity {
-
-    // O ID é criado automaticamente pelo PanacheEntity
 
     public String nome;
     public String email;
     public String senha;
     public String planoAtual;
 
-    // O JPA exige um construtor vazio
+    // Novos campos necessários para a tela Minha Conta
+    public String telefone;
+    public LocalDate dataNascimento;
+
     public Usuario() {}
 
-    // Método auxiliar para buscar por email
     public static Usuario findByEmail(String email){
         return find("email", email).firstResult();
     }

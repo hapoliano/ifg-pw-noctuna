@@ -1,13 +1,14 @@
 package br.edu.ifg.luziania.controller;
 
-import br.edu.ifg.luziania.model.dto.UsuarioDTO;
+// 1. Mude o import para usar o CadastroDTO
+import br.edu.ifg.luziania.model.dto.CadastroDTO;
 import br.edu.ifg.luziania.service.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-@Path("/cadastro")
+@Path("/cadastro") // Certifique-se que esta rota não conflita com CadastroController se ele ainda existir
 public class UsuarioController {
 
     @Inject
@@ -17,8 +18,11 @@ public class UsuarioController {
     @Path("/cadastrar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrarUsuario(UsuarioDTO usuarioDTO) {
-        boolean sucesso = usuarioService.cadastrarUsuario(usuarioDTO);
+    // 2. Mude o parâmetro de entrada para CadastroDTO
+    public Response cadastrarUsuario(CadastroDTO cadastroDTO) {
+
+        // Agora os tipos batem: o serviço espera CadastroDTO e você está passando CadastroDTO
+        boolean sucesso = usuarioService.cadastrarUsuario(cadastroDTO);
 
         if (sucesso) {
             return Response.ok("{\"mensagem\": \"Cadastro realizado com sucesso!\"}").build();
