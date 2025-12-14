@@ -4,42 +4,15 @@
   <meta charset="UTF-8">
   <title>Cadastro</title>
   <link rel="stylesheet" href="/css/cadastro.css">
+
+  <script src="/js/cadastro.js" defer></script>
 </head>
 <body>
-<script>
 
-  function logar(){
-    let domain = "http://localhost:8080"
-
-    //Exemplo utilizando QueryParam
-    let path = "/logar?login="+document.getElementById("emailInput").value+"&senha="+document.getElementById("senhaInput").value;
-    let url = domain + path;
-    fetch(url);
-
-    //Exemplo utilizando PathParam
-    path = "/logar/"+document.getElementById("emailInput").value+"/"+document.getElementById("senhaInput").value;
-    url = domain + path;
-    fetch(url);
-
-    //Exemplo utilizando Post e Body
-    path = "/logar";
-    url = domain + path;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: document.getElementById("emailInput").value,
-        senha: document.getElementById("senhaInput").value,
-      }),
-    });
-  }
-
-</script>
 <div class="form-container">
   <h2>Crie sua conta</h2>
-  <form action="../../../../../tiii-pw3/tiii-pw3/src/main/resources/templates/Login.html" method="post">
+
+  <form id="formCadastro">
     <label for="nome">Nome completo</label>
     <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
 
@@ -49,11 +22,11 @@
     <label for="senha">Senha</label>
     <input type="password" id="senha" name="senha" placeholder="Crie uma senha" required>
 
-    <label for="senha">Confirmar senha</label>
-    <input type="password" id="confirmar" name="senha" placeholder="Confirmar senha" required>
+    <label for="confirmar">Confirmar senha</label>
+    <input type="password" id="confirmar" placeholder="Confirmar senha" required>
 
     <label for="Nascimento">Digite sua data de nascimento</label>
-    <input type="date" id="Nascimento" name="Nascimento" placeholder="Data de nascimento" required>
+    <input type="date" id="Nascimento" name="Nascimento" required>
 
     <button type="submit">Cadastrar</button>
   </form>

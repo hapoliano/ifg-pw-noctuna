@@ -1,51 +1,22 @@
 package br.edu.ifg.luziania.model.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class CadastroDTO {
     private String email;
     private String senha;
-    private String confirme;
-    private String Nome;
-    private Date DataNascimento;
+    private String nome;
+    private LocalDate dataNascimento;
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
 
-    public String getSenha() {
-        return senha;
-    }
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-    public String getConfirme() {
-        return confirme;
-    }
-
-    public void setConfirme(String confirme) {
-        this.confirme = confirme;
-    }
-
-    public String getNome() {
-        return Nome;
-    }
-
-    public void setNome(String nome) {
-        Nome = nome;
-    }
-
-    public Date getDataNascimento() {
-        return DataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        DataNascimento = dataNascimento;
-    }
+    public LocalDate getDataNascimento() { return dataNascimento; }
+    public void setDataNascimento(LocalDate dataNascimento) { this.dataNascimento = dataNascimento; }
 }

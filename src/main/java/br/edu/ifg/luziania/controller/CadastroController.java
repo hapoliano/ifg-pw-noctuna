@@ -1,12 +1,10 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.dto.CadastroDTO;
+import br.edu.ifg.luziania.service.UsuarioService;
 import io.quarkus.qute.Template;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -16,23 +14,28 @@ public class CadastroController {
     @Inject
     Template cadastro;
 
-    // 1. Exibe a tela de cadastro
+    @Inject
+    UsuarioService usuarioService; // Injeta o serviço
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response get() {
         return Response.ok(cadastro.instance()).build();
     }
 
-    // 2. Recebe os dados do formulário (Exemplo)
-    // Você precisará criar um CadastroDTO com os campos (nome, email, senha, etc)
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response cadastrar(Object cadastroDTO) { // Troque Object pelo seu DTO
-        System.out.println("Recebendo dados de cadastro...");
+    public Response cadastrar(CadastroDTO dto) {
+        System.out.println("Tentando cadastrar: " + dto.getEmail());
 
-        // Aqui você chamaria: usuarioService.salvar(cadastroDTO);
+        boolean sucesso = usuarioService.cadastrarUsuario(dto);
 
-        return Response.status(Response.Status.CREATED).build();
+        if (sucesso) {
+            return Response.status(Response.Status.CREATED).build();
+        } else {
+            // Retorna erro se o email já existe (Conflito)
+            return Response.status(Response.Status.CONFLICT).entity("Email já cadastrado").build();
+        }
     }
 }
