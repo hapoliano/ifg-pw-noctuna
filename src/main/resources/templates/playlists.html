@@ -11,18 +11,55 @@
   {#include navbar/}
 
 <main>
-  <div class="playlist-header">
-    <div class="playlist-info">
-      <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/487N2T9nIPEHrlTZLL3SQs?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </div>
+  <div class="playlist-form" style="background: #1e1e2e; padding: 20px; border-radius: 12px; margin-bottom: 30px; max-width: 600px;">
+    <h2 style="color: #c084fc; margin-bottom: 15px;">Nova Playlist</h2>
+    <form action="/playlists" method="post" style="display: flex; gap: 10px; flex-direction: column;">
+      <input type="text" name="nome" placeholder="Nome da Playlist" required
+             style="padding: 10px; border-radius: 5px; border: none;">
+
+      <input type="url" name="url" placeholder="Link Embed (Ex: Spotify -> Compartilhar -> Incorporar)" required
+             style="padding: 10px; border-radius: 5px; border: none;">
+
+      <button type="submit"
+              style="padding: 10px; background: #c084fc; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+        Salvar Playlist
+      </button>
+    </form>
+  </div>
+
+  <h1 style="margin-bottom: 20px;">Minhas Playlists</h1>
+
+  <div class="playlist-container" style="display: flex; flex-direction: column; gap: 30px;">
+
+    {#for p in listaPlaylists}
+      <div class="playlist-item">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h3 style="margin: 0;">{p.nome}</h3>
+
+          <form action="/playlists/deletar/{p.id}" method="post">
+            <button type="submit" style="background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 5px 10px; border-radius: 5px; cursor: pointer;">
+              Excluir
+            </button>
+          </form>
+        </div>
+
+        <div class="playlist-iframe">
+          <iframe style="border-radius:12px" src="{p.url}" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+      </div>
+    {#else}
+      <p style="color: #aaa;">Nenhuma playlist cadastrada ainda.</p>
+    {/for}
+
   </div>
 </main>
 
 <footer>
-  <p>© 2025 Noctuna Music — Playlist "Noites Urbanas".</p>
+  <p>© 2025 Noctuna Music</p>
 </footer>
 
 <script>
+  // Script do menu perfil (igual ao que já tinha)
   const perfil = document.getElementById('perfil');
   const menuPerfil = document.getElementById('menuPerfil');
 
