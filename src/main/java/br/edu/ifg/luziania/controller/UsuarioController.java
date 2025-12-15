@@ -18,10 +18,8 @@ public class UsuarioController {
     @Path("/cadastrar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    // 2. Mude o parâmetro de entrada para CadastroDTO
     public Response cadastrarUsuario(CadastroDTO cadastroDTO) {
 
-        // Agora os tipos batem: o serviço espera CadastroDTO e você está passando CadastroDTO
         boolean sucesso = usuarioService.cadastrarUsuario(cadastroDTO);
 
         if (sucesso) {

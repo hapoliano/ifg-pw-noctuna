@@ -20,10 +20,43 @@ public class LoginController {
     @Inject
     UsuarioService usuarioService;
 
+    @Inject
+    UsuarioService loginService;
+
     @GET
     @Produces(MediaType.TEXT_HTML)
     public Response get() {
         return Response.ok(login.instance()).build();
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response loginForm(@FormParam("email") String email, @FormParam("senha") String senha) {
+
+        LoginDTO loginDTO = new LoginDTO();
+        loginDTO.setEmail(email);
+        loginDTO.setSenha(senha);
+
+        boolean autenticado = loginService.autenticar(loginDTO);
+
+        if (autenticado) {
+            // --- CORREÇÃO: CRIAR O COOKIE ---
+            NewCookie cookie = new NewCookie.Builder("usuario_logado")
+                    .value(email)
+                    .path("/")
+                    .maxAge(3600)
+                    .build();
+
+            // Adiciona o cookie na resposta junto com o redirecionamento
+            return Response.seeOther(URI.create("/inicio"))
+                    .cookie(cookie)
+                    .build();
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("Login falhou! <a href='/login'>Tente novamente</a>")
+                    .type(MediaType.TEXT_HTML)
+                    .build();
+        }
     }
 
     @POST

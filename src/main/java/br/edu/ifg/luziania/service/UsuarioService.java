@@ -1,5 +1,6 @@
 package br.edu.ifg.luziania.service;
 
+import br.edu.ifg.luziania.model.dto.LoginDTO;
 import br.edu.ifg.luziania.model.dto.MinhaContaDTO; // Importe o DTO correto
 import br.edu.ifg.luziania.model.dto.CadastroDTO; // Seu DTO de cadastro (se estiver usando)
 import br.edu.ifg.luziania.model.entity.Usuario;
@@ -60,5 +61,15 @@ public class UsuarioService {
             return usuario;
         }
         return null;
+    }
+
+    public boolean autenticar(LoginDTO dto) {
+        Usuario usuario = Usuario.findByEmail(dto.getEmail());
+
+        // Verifica se o usuário existe e se a senha bate
+        if (usuario != null && usuario.senha.equals(dto.getSenha())) {
+            return true;
+        }
+        return false;
     }
 }
