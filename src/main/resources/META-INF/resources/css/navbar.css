@@ -1,0 +1,134 @@
+/* =========================================
+   NAVBAR TEMA "NOCTUNA GLASS"
+   ========================================= */
+
+/* A fonte deve combinar com o resto do site */
+header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    /* Efeito de Vidro (Glassmorphism) */
+    background: rgba(42, 42, 62, 0.75); /* Roxo escuro translúcido */
+    backdrop-filter: blur(12px);        /* Desfoque do fundo */
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Borda e Sombra sutis */
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+
+    /* Layout */
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logotipo com Gradiente */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+
+    /* Gradiente Roxo/Rosa igual ao Minha Conta */
+    background: linear-gradient(135deg, #d946ef, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    /* Brilho leve */
+    filter: drop-shadow(0 0 2px rgba(168, 85, 247, 0.3));
+}
+
+/* Links de Navegação */
+nav {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+nav a {
+    color: #e0e0e0; /* Branco suave */
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Efeito Hover nos Links */
+nav a:hover {
+    color: #d946ef; /* Rosa choque */
+    text-shadow: 0 0 8px rgba(217, 70, 239, 0.4);
+}
+
+/* Bolinha do Perfil */
+.perfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    /* Gradiente combinando */
+    background: linear-gradient(135deg, #d946ef, #a855f7);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+
+    /* Borda brilhante */
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.perfil:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+}
+
+/* Menu Dropdown do Perfil */
+.menu-perfil {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+
+    /* Vidro Escuro */
+    background: rgba(30, 30, 46, 0.95);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 12px;
+    min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+
+    overflow: hidden;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-perfil.ativo {
+    display: block;
+}
+
+.menu-perfil a {
+    display: block;
+    padding: 12px 20px;
+    color: #fff;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.menu-perfil a:hover {
+    background: rgba(168, 85, 247, 0.15); /* Fundo roxo bem suave ao passar o mouse */
+    color: #d946ef;
+}

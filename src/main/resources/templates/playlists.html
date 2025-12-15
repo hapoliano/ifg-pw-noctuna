@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Noites Urbanas | Noctuna</title>
+  <title>Minhas Playlists | Noctuna</title>
   <link rel="stylesheet" href="/css/playlist.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+
+  <script src="/js/playlists.js" defer></script>
 </head>
 <body>
 
@@ -13,6 +16,7 @@
 <main>
   <div class="playlist-form" style="background: #1e1e2e; padding: 20px; border-radius: 12px; margin-bottom: 30px; max-width: 600px;">
     <h2 style="color: #c084fc; margin-bottom: 15px;">Nova Playlist</h2>
+
     <form action="/playlists" method="post" style="display: flex; gap: 10px; flex-direction: column;">
       <input type="text" name="nome" placeholder="Nome da Playlist" required
              style="padding: 10px; border-radius: 5px; border: none;">
@@ -57,25 +61,6 @@
 <footer>
   <p>© 2025 Noctuna Music</p>
 </footer>
-
-<script>
-  // Script do menu perfil (igual ao que já tinha)
-  const perfil = document.getElementById('perfil');
-  const menuPerfil = document.getElementById('menuPerfil');
-
-  if (perfil && menuPerfil) {
-    perfil.addEventListener('click', function(e) {
-      e.stopPropagation();
-      menuPerfil.classList.toggle('ativo');
-    });
-
-    document.addEventListener('click', function(e) {
-      if (!perfil.contains(e.target)) {
-        menuPerfil.classList.remove('ativo');
-      }
-    });
-  }
-</script>
 
 </body>
 </html>

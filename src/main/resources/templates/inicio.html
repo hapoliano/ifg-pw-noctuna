@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Biblioteca Musical | Noctuna</title>
   <link rel="stylesheet" href="/css/inicio.css">
+  <link rel="stylesheet" href="/css/navbar.css">
   <script src="/js/inicio.js" defer></script>
 </head>
 <body>
@@ -12,74 +13,6 @@
 <main>
   <h1>Suas Músicas</h1>
   <div class="music-grid">
-
-    <div class="music-card">
-      <h3>Largado às Traças</h3>
-      <img src="https://i.scdn.co/image/ab6761610000e5eb3bb672b1c2571a88e937ca0a" alt="Largado às Traças">
-
-      <div class="progress-container">
-        <span class="timer">00:00</span>
-        <input type="range" class="progress-bar" value="0" min="0" max="100">
-      </div>
-
-      <div class="player-controls">
-        <button class="play-btn" data-src="/musicas/tracas.mp3"></button>
-        <button class="fav-btn"></button>
-      </div>
-
-      <audio></audio>
-    </div>
-
-    <div class="music-card">
-      <h3>Notificação Preferida</h3>
-      <img src="https://cdn-images.dzcdn.net/images/artist/ea589fefdebdefd0624edda903d07672/500x500.jpg" alt="Notificação Preferida">
-
-      <div class="progress-container">
-        <span class="timer">00:00</span>
-        <input type="range" class="progress-bar" value="0" min="0" max="100">
-      </div>
-
-      <div class="player-controls">
-        <button class="play-btn" data-src="/musicas/preferida.mp3"></button>
-        <button class="fav-btn"></button>
-      </div>
-
-      <audio></audio>
-    </div>
-
-    <div class="music-card">
-      <h3>Barulho do Foguete</h3>
-      <img src="https://i.scdn.co/image/ab6761610000e5eb3bb672b1c2571a88e937ca0a" alt="Barulho do Foguete">
-
-      <div class="progress-container">
-        <span class="timer">00:00</span>
-        <input type="range" class="progress-bar" value="0" min="0" max="100">
-      </div>
-
-      <div class="player-controls">
-        <button class="play-btn" data-src="/musicas/foguete.mp3"></button>
-        <button class="fav-btn"></button>
-      </div>
-
-      <audio></audio>
-    </div>
-
-    <div class="music-card">
-      <h3>Pulando o Muro</h3>
-      <img src="https://cdn-images.dzcdn.net/images/artist/ea589fefdebdefd0624edda903d07672/500x500.jpg" alt="Pulando o Muro">
-
-      <div class="progress-container">
-        <span class="timer">00:00</span>
-        <input type="range" class="progress-bar" value="0" min="0" max="100">
-      </div>
-
-      <div class="player-controls">
-        <button class="play-btn" data-src="/musicas/muro.mp3"></button>
-        <button class="fav-btn"></button>
-      </div>
-
-      <audio></audio>
-    </div>
 
     {#for musica in musicasBanco}
       <div class="music-card">
