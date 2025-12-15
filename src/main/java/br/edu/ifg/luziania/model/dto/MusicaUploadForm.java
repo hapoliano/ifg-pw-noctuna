@@ -14,8 +14,13 @@ public class MusicaUploadForm {
     @FormParam("artista")
     public String artista;
 
-    // Recebe o arquivo do HTML
+    // Arquivo de MP3
     @RestForm("arquivo")
     @PartType(MediaType.APPLICATION_OCTET_STREAM)
     public File arquivo;
+
+    // NOVO: Arquivo de Imagem
+    @RestForm("imagem") // O nome "imagem" deve ser igual ao do input no HTML
+    @PartType(MediaType.APPLICATION_OCTET_STREAM)
+    public File imagem;
 }

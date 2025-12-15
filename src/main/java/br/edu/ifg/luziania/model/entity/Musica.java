@@ -10,11 +10,14 @@ public class Musica extends PanacheEntity {
     public String titulo;
     public String artista;
 
-    // @Lob indica que este campo guardará um arquivo grande (BLOB)
+    // Arquivo de Áudio (MP3)
     @Lob
     public byte[] dados;
+    public String nomeArquivo;
 
-    public String nomeArquivo; // Ex: "minhamusica.mp3"
+    // NOVO: Arquivo da Capa (Imagem)
+    @Lob
+    public byte[] capa;
 
     public Musica() {}
 }

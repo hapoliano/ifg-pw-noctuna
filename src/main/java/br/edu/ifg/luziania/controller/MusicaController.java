@@ -12,7 +12,7 @@ import java.nio.file.Files;
 @Path("/musicas-db")
 public class MusicaController {
 
-    // 1. Upload da Música
+    // 1. Upload da Música (Atualizado)
     @POST
     @Path("/upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -23,13 +23,18 @@ public class MusicaController {
             musica.titulo = form.titulo;
             musica.artista = form.artista;
 
-            // Converte o arquivo enviado para bytes para salvar no banco
-            musica.dados = Files.readAllBytes(form.arquivo.toPath());
-            musica.nomeArquivo = form.arquivo.getName();
+            // Salva o áudio
+            if (form.arquivo != null) {
+                musica.dados = Files.readAllBytes(form.arquivo.toPath());
+                musica.nomeArquivo = form.arquivo.getName();
+            }
+
+            // NOVO: Salva a imagem (se o usuário enviou)
+            if (form.imagem != null) {
+                musica.capa = Files.readAllBytes(form.imagem.toPath());
+            }
 
             musica.persist();
-
-            // Redireciona para o início após salvar
             return Response.seeOther(java.net.URI.create("/inicio")).build();
 
         } catch (IOException e) {
@@ -38,20 +43,30 @@ public class MusicaController {
         }
     }
 
-    // 2. Endpoint para o Player tocar a música (Stream)
+    // 2. Player de Áudio (Mantido)
     @GET
     @Path("/{id}/audio")
     @Produces("audio/mpeg")
     @Transactional
     public Response baixarAudio(@PathParam("id") Long id) {
         Musica musica = Musica.findById(id);
+        if (musica == null || musica.dados == null) return Response.status(404).build();
+        return Response.ok(musica.dados).build();
+    }
 
-        if (musica == null || musica.dados == null) {
+    // 3. NOVO: Endpoint para mostrar a Capa
+    @GET
+    @Path("/{id}/capa")
+    @Produces("image/jpeg") // Assume JPEG (navegadores modernos detectam PNG auto)
+    @Transactional
+    public Response baixarCapa(@PathParam("id") Long id) {
+        Musica musica = Musica.findById(id);
+
+        // Se não tiver capa, retorna 404 (o HTML vai usar uma imagem padrão)
+        if (musica == null || musica.capa == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.ok(musica.dados)
-                .header("Content-Disposition", "inline; filename=\"" + musica.nomeArquivo + "\"")
-                .build();
+        return Response.ok(musica.capa).build();
     }
 }

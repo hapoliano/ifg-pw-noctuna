@@ -86,7 +86,9 @@
         <h3>{musica.titulo}</h3>
         <p style="font-size: 12px; color: #aaa; margin-bottom: 5px;">{musica.artista}</p>
 
-        <img src="https://via.placeholder.com/150/a855f7/ffffff?text=Noctuna" alt="{musica.titulo}">
+        <img src="/musicas-db/{musica.id}/capa"
+             onerror="this.onerror=null; this.src='https://via.placeholder.com/150/a855f7/ffffff?text=Noctuna';"
+             alt="{musica.titulo}">
 
         <div class="progress-container">
           <span class="timer">00:00</span>
