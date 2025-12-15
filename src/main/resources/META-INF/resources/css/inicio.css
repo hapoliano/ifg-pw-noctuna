@@ -133,21 +133,28 @@ main {
 
 .music-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    /* Mantém o tamanho dobrado (400px) que você pediu */
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 30px;
-}
 
+    /* 👇 MUDANÇA AQUI: de 'start' para 'center' */
+    justify-content: center;
+}
 /* --- CARD DE MÚSICA --- */
 .music-card {
     background-color: #1e1e1e;
     border-radius: 12px;
-    padding: 15px;
+    padding: 25px; /* Aumentei um pouco o padding também */
     text-align: center;
-    transition: transform 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative; /* Importante para layout */
+    position: relative;
+
+    /* 👇 DOBRADO: de ~360px para 720px */
+    height: 720px;
+    width: 100%;
+    overflow: hidden;
 }
 
 .music-card:hover {
@@ -156,13 +163,23 @@ main {
 
 .music-card img {
     width: 100%;
+
+    /* 👇 DOBRADO: de 200px para 400px */
+    height: 400px;
+    object-fit: cover;
+
     border-radius: 8px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .music-card h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 24px; /* Maior */
+    margin-bottom: 15px;
+    height: 60px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* --- BARRA DE PROGRESSO --- */
