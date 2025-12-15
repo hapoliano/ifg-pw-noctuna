@@ -1,26 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Favoritas | Noctuna</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Favoritos | Noctuna</title>
   <link rel="stylesheet" href="/css/inicio.css">
-  <link rel="stylesheet" href="/css/favoritos.css">
+
+  <script src="/js/favorito.js" defer></script>
 </head>
 <body>
   {#include navbar/}
+
 <main>
-  <h1>SUAS MÚSICAS FAVORITAS</h1>
-  <div class="music-grid" id="listaFavoritos"></div>
+  <h1>Meus Favoritos ❤️</h1>
+
+  <div class="music-grid">
+
+    {#for fav in listaFavoritos}
+      <div class="music-card" id="card-{fav.id}">
+        <h3>{fav.titulo}</h3>
+        <p style="font-size: 12px; color: #aaa; margin-bottom: 5px;">{fav.artista}</p>
+
+        <img src="{fav.capaUrl ?: 'https://via.placeholder.com/150/a855f7/ffffff?text=Noctuna'}" alt="{fav.titulo}">
+
+        <div class="progress-container">
+          <span class="timer">00:00</span>
+          <input type="range" class="progress-bar" value="0" min="0" max="100">
+        </div>
+
+        <div class="player-controls">
+          <button class="play-btn"
+                  data-id="{fav.musicaId}"
+                  data-src="{fav.audioUrl}">
+          </button>
+
+          <button class="fav-btn favorito"></button>
+        </div>
+
+        <audio></audio>
+      </div>
+    {#else}
+      <div style="grid-column: 1/-1; text-align: center; margin-top: 50px;">
+        <h3 style="color: #666;">Você ainda não favoritou nenhuma música. 💔</h3>
+        <a href="/inicio" style="color: #a855f7; text-decoration: none;">Ir para o Início</a>
+      </div>
+    {/for}
+
+  </div>
 </main>
-
-<footer>
-  <p>&copy; 2025 Noctuna Music - Todos os direitos reservados.</p>
-</footer>
-
-<script src="/js/favorito.js">
-
-</script>
 
 </body>
 </html>

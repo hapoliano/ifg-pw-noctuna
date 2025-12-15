@@ -1,101 +1,155 @@
-// ========================================
-// 🎵 MOSTRAR E GERENCIAR FAVORITOS SALVOS
-// ========================================
+document.addEventListener("DOMContentLoaded", () => {
 
-const container = document.getElementById("listaFavoritos");
-let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    // ===============================
+    // 1. MENU DE PERFIL
+    // ===============================
+    const perfil = document.getElementById('perfil');
+    const menuPerfil = document.getElementById('menuPerfil');
 
-// Salvar favoritos no localStorage
-function salvarFavoritos() {
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-}
+    if (perfil && menuPerfil) {
+        perfil.addEventListener('click', function (e) {
+            e.stopPropagation();
+            menuPerfil.classList.toggle('ativo');
+        });
 
-// Renderizar os cards das músicas favoritas
-function renderizarFavoritos() {
-    container.innerHTML = "";
-
-    if (favoritos.length === 0) {
-        container.innerHTML =
-            "<p style='text-align:center; color:#aaa;'>Nenhuma música favorita ainda 💔</p>";
-        return;
+        document.addEventListener('click', function (e) {
+            if (!perfil.contains(e.target) && !menuPerfil.contains(e.target)) {
+                menuPerfil.classList.remove('ativo');
+            }
+        });
     }
 
-    favoritos.forEach(fav => {
-        const card = document.createElement("div");
-        card.classList.add("music-card");
-        card.innerHTML = `
-      <h3>${fav.titulo}</h3>
-      <img src="${fav.img}" alt="${fav.titulo}">
-      <div class="progress-container">
-        <span class="timer">00:00</span>
-        <input type="range" class="progress-bar" value="0" min="0" max="100">
-      </div>
-      <button class="play-btn" data-src="${fav.src}"></button>
-      <audio></audio>
-      <button class="fav-btn favorito"></button>
-    `;
-        container.appendChild(card);
-    });
+    // ===============================
+    // 2. SISTEMA DE FAVORITOS (Com Remoção Automática)
+    // ===============================
+    const botoesFavorito = document.querySelectorAll(".fav-btn");
 
-    ativarFuncoes();
-}
+    async function removerFavoritoBackend(idMusica, titulo, btn) {
+        try {
+            // Monta o objeto (mesmo DTO do início)
+            const dados = {
+                id: idMusica,
+                titulo: titulo,
+                capa: "",
+                src: "",
+                artista: ""
+            };
 
-// ===============================
-// ⚙️ PLAYER & FAVORITAR/REMOVER
-// ===============================
+            const resposta = await fetch('/api/favoritos', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
 
-function ativarFuncoes() {
-    const botoesFav = document.querySelectorAll(".fav-btn");
-    const botoesPlay = document.querySelectorAll(".play-btn");
-    let audioAtual = null;
+            if (resposta.status === 401) {
+                window.location.href = "/login";
+                return;
+            }
 
-    // Remover favorito
-    botoesFav.forEach(botao => {
+            if (resposta.ok) {
+                const json = await resposta.json();
+
+                // Se json.favorito for false, significa que foi removido
+                if (!json.favorito) {
+                    btn.classList.remove("favorito");
+
+                    // EFEITO VISUAL: Remove o card da tela suavemente
+                    const card = btn.closest(".music-card");
+                    card.style.transition = "all 0.5s ease";
+                    card.style.opacity = "0";
+                    card.style.transform = "scale(0.8)";
+
+                    setTimeout(() => {
+                        card.remove();
+                        // Se não sobrar cards, recarrega para mostrar a mensagem de vazio (opcional)
+                        if (document.querySelectorAll(".music-card").length === 0) {
+                            location.reload();
+                        }
+                    }, 500);
+                } else {
+                    // Caso raro: se por algum motivo ele adicionar de novo
+                    btn.classList.add("favorito");
+                }
+            }
+        } catch (error) {
+            console.error("Erro ao desfavoritar:", error);
+        }
+    }
+
+    botoesFavorito.forEach(botao => {
         botao.addEventListener("click", () => {
             const card = botao.closest(".music-card");
-            const titulo = card.querySelector("h3").textContent;
+            const titulo = card.querySelector("h3").innerText;
+            const playBtn = card.querySelector(".play-btn");
 
-            favoritos = favoritos.filter(f => f.titulo !== titulo);
-            salvarFavoritos();
-            renderizarFavoritos();
+            const idRaw = playBtn ? playBtn.getAttribute("data-id") : null;
+            const idMusica = idRaw ? parseInt(idRaw) : null;
+
+            // Chama a função
+            removerFavoritoBackend(idMusica, titulo, botao);
         });
     });
 
-    // Player
-    botoesPlay.forEach(botao => {
-        botao.addEventListener("click", () => {
-            const card = botao.closest(".music-card");
-            const audio = card.querySelector("audio");
-            const src = botao.getAttribute("data-src");
+    // ===============================
+    // 3. PLAYER DE MÚSICA (Igual ao Início)
+    // ===============================
+    const musicCards = document.querySelectorAll(".music-card");
+    let audioAtual = null;
+    let botaoAtual = null;
 
-            if (!src) return;
+    musicCards.forEach(card => {
+        const btn = card.querySelector(".play-btn");
+        const audio = card.querySelector("audio");
+        const progressBar = card.querySelector(".progress-bar");
+        const timer = card.querySelector(".timer");
+        const src = btn.getAttribute("data-src");
 
+        btn.addEventListener("click", () => {
             if (audioAtual && audioAtual !== audio) {
                 audioAtual.pause();
-                audioAtual.closest(".music-card")
-                    .querySelector(".play-btn")
-                    .classList.remove("tocando");
+                if (botaoAtual) botaoAtual.classList.remove("tocando");
             }
 
-            if (audio.src !== src) {
+            if (!audio.src || !audio.src.includes(src)) {
                 audio.src = src;
             }
 
             if (audio.paused) {
-                audio.play();
-                botao.classList.add("tocando");
-                audioAtual = audio;
+                audio.play()
+                    .then(() => {
+                        btn.classList.add("tocando");
+                        audioAtual = audio;
+                        botaoAtual = btn;
+                    })
+                    .catch(e => console.error(e));
             } else {
                 audio.pause();
-                botao.classList.remove("tocando");
+                btn.classList.remove("tocando");
                 audioAtual = null;
+                botaoAtual = null;
             }
         });
+
+        audio.addEventListener("timeupdate", () => {
+            if (audio.duration) {
+                const progress = (audio.currentTime / audio.duration) * 100;
+                progressBar.value = progress;
+                const min = Math.floor(audio.currentTime / 60);
+                const sec = Math.floor(audio.currentTime % 60);
+                timer.textContent = `${min}:${sec < 10 ? '0' + sec : sec}`;
+            }
+        });
+
+        progressBar.addEventListener("input", () => {
+            if (audio.duration) {
+                audio.currentTime = (progressBar.value / 100) * audio.duration;
+            }
+        });
+
+        audio.addEventListener("ended", () => {
+            btn.classList.remove("tocando");
+            progressBar.value = 0;
+            timer.textContent = "00:00";
+        });
     });
-}
-
-// ===============================
-// 🚀 INICIALIZAÇÃO
-// ===============================
-
-renderizarFavoritos();
+});
