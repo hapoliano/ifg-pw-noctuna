@@ -10,6 +10,7 @@ body {
     color: #fff;
 }
 
+/* --- HEADER / NAVBAR --- */
 header {
     background-color: #1a1a1a;
     padding: 15px 40px;
@@ -47,13 +48,13 @@ nav a:hover {
     color: #fff;
 }
 
+/* --- PERFIL --- */
 .perfil-container {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-/* BOTÃO DE PERFIL */
 .perfil {
     width: 40px;
     height: 40px;
@@ -76,7 +77,6 @@ nav a:hover {
     box-shadow: 0 4px 15px rgba(233, 30, 99, 0.5);
 }
 
-/* MENU DROPDOWN */
 .menu-perfil {
     display: none;
     position: absolute;
@@ -92,14 +92,8 @@ nav a:hover {
 }
 
 @keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .menu-perfil.ativo {
@@ -119,7 +113,7 @@ nav a:hover {
     background-color: #3e3e3e;
 }
 
-/* Conteúdo da página */
+/* --- CONTEÚDO PRINCIPAL --- */
 .conteudo {
     padding: 40px;
     max-width: 1200px;
@@ -143,6 +137,7 @@ main {
     gap: 30px;
 }
 
+/* --- CARD DE MÚSICA --- */
 .music-card {
     background-color: #1e1e1e;
     border-radius: 12px;
@@ -152,6 +147,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative; /* Importante para layout */
 }
 
 .music-card:hover {
@@ -169,6 +165,7 @@ main {
     margin-bottom: 10px;
 }
 
+/* --- BARRA DE PROGRESSO --- */
 .progress-container {
     display: flex;
     align-items: center;
@@ -202,44 +199,106 @@ main {
     cursor: pointer;
 }
 
+/* --- CONTROLES DO PLAYER (NOVO) --- */
+.player-controls {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin-top: 5px;
+}
+
+/* --- BOTÃO PLAY/PAUSE (Roxo) --- */
 .play-btn {
     width: 50px;
     height: 50px;
-    background: white;
+    background-color: #a855f7;
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    margin-top: 10px;
+    z-index: 5;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.play-btn:hover {
+    transform: scale(1.1);
+    background-color: #c084fc;
+}
+
+.play-btn:active {
+    transform: scale(0.95);
+}
+
+/* Ícone de Play (Triângulo) */
+.play-btn::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid white;
+    margin-left: 5px; /* Ajuste para centralizar visualmente */
+    transition: all 0.2s;
+}
+
+/* Ícone de Pause (Duas Barras) */
+.play-btn.tocando::before {
+    width: 16px;
+    height: 20px;
+    border: none;
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+    margin-left: 0;
+    background-color: transparent;
+}
+
+/* --- BOTÃO FAVORITAR (Ao lado) --- */
+.fav-btn {
+    /* AUMENTADO: de 40px para 50px (agora do mesmo tamanho do botão de play) */
+    width: 50px;
+    height: 50px;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    /* Posiciona ao lado do centro */
+    position: absolute;
+    /* AJUSTADO: Aumentei o deslocamento para 50px para manter o espaçamento */
+    left: calc(50% + 50px);
+
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    transition: transform 0.2s;
+    z-index: 5;
 }
 
-.play-btn::before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 10px 0 10px 16px;
-    border-color: transparent transparent transparent black;
-    left: 50%;
-    top: 50%;
-    transform: translate(-40%, -50%);
+.fav-btn:hover {
+    /* Ajustei levemente a escala do hover para não ficar exagerado */
+    transform: scale(1.15);
 }
 
-.play-btn.pausar::before {
-    content: "";
-    position: absolute;
-    width: 4px;
-    height: 18px;
-    background: black;
-    left: 50%;
-    top: 50%;
-    transform: translate(-120%, -50%);
-    box-shadow: 8px 0 black;
-    border: none;
+.fav-btn::before {
+    content: "❤";
+    /* AUMENTADO: de 24px para 30px para o ícone preencher bem o botão maior */
+    font-size: 30px;
+    color: #666; /* Cinza */
+    transition: color 0.3s;
+}
+
+.fav-btn.favorito::before {
+    content: "❤";
+    color: #a855f7; /* Roxo */
+    filter: drop-shadow(0 0 5px rgba(168, 85, 247, 0.5));
 }
 
 footer {
@@ -248,29 +307,4 @@ footer {
     background-color: #1b1b1b;
     color: #aaa;
     margin-top: 40px;
-}
-
-.fav-btn {
-    background: #1e1e1e;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    position: relative;
-}
-
-.fav-btn::before {
-    content: "♡";
-    color: #6f2387;
-    font-size: 40px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(325%, -104%);
-}
-
-.fav-btn.favorito::before {
-    content: "❤️";
-    color: #6f2387;
-    font-size: 35px;
-    transform: translate(159%, -118%);
 }
