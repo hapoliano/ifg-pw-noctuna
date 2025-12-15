@@ -1,5 +1,6 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.bo.InicioBO;
 import br.edu.ifg.luziania.model.entity.Musica;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
@@ -16,6 +17,8 @@ public class InicioController {
     @Inject
     Template inicio;
 
+    @Inject
+    InicioBO inicioBO;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
@@ -23,7 +26,8 @@ public class InicioController {
     public TemplateInstance get() {
         // Busca todas as músicas salvas no banco
         // O @Transactional garante a conexão para ler os arquivos MP3 (Lob)
-        List<Musica> musicasDoBanco = Musica.listAll();
+
+        List<Musica> musicasDoBanco = inicioBO.listasMusicas();
 
         return inicio.data("musicasBanco", musicasDoBanco);
     }

@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 
 @ApplicationScoped
 public class UsuarioBO {
+
     @Transactional
     public boolean cadastrarUsuario(CadastroDTO dto) {
         if (Usuario.findByEmail(dto.getEmail()) != null) {

@@ -8,6 +8,7 @@ import java.util.List;
 
 @ApplicationScoped
 public class CriadorBO {
+
     private List<MusicaDTO> playlist = new ArrayList<>();
     private int totalUsuarios = 2;
     private int totalMusicas = 4;
