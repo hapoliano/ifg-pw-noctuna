@@ -1,8 +1,8 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.bo.FavoritoBO;
 import br.edu.ifg.luziania.model.dto.FavoritoDTO; // <--- Adicione este import
 import br.edu.ifg.luziania.model.entity.Favorito;
-import br.edu.ifg.luziania.service.FavoritoService;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
@@ -19,7 +19,7 @@ public class FavoritosController {
     Template favoritos;
 
     @Inject
-    FavoritoService favoritoService;
+    FavoritoBO favoritoBO;
 
     // ... seu método GET existente continua aqui ...
     @GET
@@ -28,7 +28,7 @@ public class FavoritosController {
         // ... mantenha o código do GET como estava ...
         List<Favorito> lista;
         if (email != null) {
-            lista = favoritoService.listarPorUsuario(email);
+            lista = favoritoBO.listarPorUsuario(email);
         } else {
             lista = Collections.emptyList();
         }
@@ -47,7 +47,7 @@ public class FavoritosController {
         }
 
         // Chama o serviço que cria ou deleta o favorito
-        boolean virouFavorito = favoritoService.alternarFavorito(email, dto);
+        boolean virouFavorito = favoritoBO.alternarFavorito(email, dto);
 
         // Retorna um JSON simples: { "favorito": true } ou { "favorito": false }
         return Response.ok("{\"favorito\": " + virouFavorito + "}").build();

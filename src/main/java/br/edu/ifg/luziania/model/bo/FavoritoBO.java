@@ -1,15 +1,15 @@
-package br.edu.ifg.luziania.service;
+package br.edu.ifg.luziania.model.bo;
 
 import br.edu.ifg.luziania.model.dto.FavoritoDTO;
 import br.edu.ifg.luziania.model.entity.Favorito;
-import br.edu.ifg.luziania.model.entity.Usuario; // Importante
+import br.edu.ifg.luziania.model.entity.Usuario;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
+
 import java.util.List;
 
 @ApplicationScoped
-public class FavoritoService {
-
+public class FavoritoBO {
     @Transactional
     public boolean alternarFavorito(String emailUsuario, FavoritoDTO dto) {
         // 1. Busca o usuário para pegar o ID

@@ -1,8 +1,8 @@
 package br.edu.ifg.luziania.controller;
 
 // 1. Mude o import para usar o CadastroDTO
+import br.edu.ifg.luziania.model.bo.UsuarioBO;
 import br.edu.ifg.luziania.model.dto.CadastroDTO;
-import br.edu.ifg.luziania.service.UsuarioService;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -12,7 +12,7 @@ import jakarta.ws.rs.core.Response;
 public class UsuarioController {
 
     @Inject
-    UsuarioService usuarioService;
+    UsuarioBO usuarioBO;
 
     @POST
     @Path("/cadastrar")
@@ -20,7 +20,7 @@ public class UsuarioController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response cadastrarUsuario(CadastroDTO cadastroDTO) {
 
-        boolean sucesso = usuarioService.cadastrarUsuario(cadastroDTO);
+        boolean sucesso = usuarioBO.cadastrarUsuario(cadastroDTO);
 
         if (sucesso) {
             return Response.ok("{\"mensagem\": \"Cadastro realizado com sucesso!\"}").build();

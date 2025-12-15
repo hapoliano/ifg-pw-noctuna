@@ -1,11 +1,10 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.bo.CriadorBO;
 import br.edu.ifg.luziania.model.dto.MusicaDTO;
 import br.edu.ifg.luziania.model.dto.MusicaUploadForm; // Importe o Form
 import br.edu.ifg.luziania.model.entity.Musica; // Importe a Entity
-import br.edu.ifg.luziania.service.CriadorService;
 import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional; // Importante para salvar no banco
 import jakarta.ws.rs.*;
@@ -20,7 +19,7 @@ import java.util.List;
 public class CriadorController {
 
     @Inject
-    CriadorService criadorService;
+    CriadorBO criadorBO;
 
     @Inject
     Template criador;
@@ -36,7 +35,7 @@ public class CriadorController {
     @Path("/musicas")
     @Produces(MediaType.APPLICATION_JSON)
     public List<MusicaDTO> listarMusicas() {
-        return criadorService.listarMusicas();
+        return criadorBO.listarMusicas();
     }
 
     // ✅ AJUSTADO: Agora aceita Upload de Arquivo
@@ -76,12 +75,12 @@ public class CriadorController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response estatisticas() {
         // Verifica se o serviço retornou nulo para evitar erro 500
-        var maisTocada = criadorService.musicaMaisTocada();
+        var maisTocada = criadorBO.musicaMaisTocada();
         String nomeMaisTocada = (maisTocada != null) ? maisTocada.getNome() : "Nenhuma";
 
         return Response.ok("{"
-                + "\"totalUsuarios\": " + criadorService.getTotalUsuarios() + ","
-                + "\"totalMusicas\": " + criadorService.getTotalMusicas() + ","
+                + "\"totalUsuarios\": " + criadorBO.getTotalUsuarios() + ","
+                + "\"totalMusicas\": " + criadorBO.getTotalMusicas() + ","
                 + "\"musicaMaisTocada\": \"" + nomeMaisTocada + "\""
                 + "}").build();
     }

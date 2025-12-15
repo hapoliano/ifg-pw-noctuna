@@ -1,14 +1,12 @@
 package br.edu.ifg.luziania.controller;
 
 import br.edu.ifg.luziania.model.entity.Musica;
-import br.edu.ifg.luziania.service.InicioService;
 import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 

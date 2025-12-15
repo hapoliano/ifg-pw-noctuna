@@ -1,9 +1,8 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.bo.UsuarioBO;
 import br.edu.ifg.luziania.model.dto.MinhaContaDTO;
-import br.edu.ifg.luziania.service.UsuarioService;
 import io.quarkus.qute.Template;
-import io.quarkus.qute.TemplateInstance;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.CookieParam; // Importante
 import jakarta.ws.rs.GET;
@@ -20,7 +19,7 @@ public class MinhaContaController {
     Template minhaconta;
 
     @Inject
-    UsuarioService usuarioService;
+    UsuarioBO usuarioBO;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
@@ -32,7 +31,7 @@ public class MinhaContaController {
             return Response.seeOther(URI.create("/login")).build();
         }
 
-        MinhaContaDTO dados = usuarioService.buscarDadosMinhaConta(emailLogado);
+        MinhaContaDTO dados = usuarioBO.buscarDadosMinhaConta(emailLogado);
 
         if (dados == null) {
             // Se tem cookie mas não achou no banco (ex: usuario deletado), volta pro login

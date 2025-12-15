@@ -1,8 +1,9 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.bo.LoginBO;
+import br.edu.ifg.luziania.model.bo.UsuarioBO;
 import br.edu.ifg.luziania.model.dto.LoginDTO; // Certifique-se de ter esse DTO (email, senha)
 import br.edu.ifg.luziania.model.entity.Usuario;
-import br.edu.ifg.luziania.service.UsuarioService;
 import io.quarkus.qute.Template;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -18,10 +19,10 @@ public class LoginController {
     Template login;
 
     @Inject
-    UsuarioService usuarioService;
+    UsuarioBO usuarioBO;
 
     @Inject
-    UsuarioService loginService;
+    LoginBO loginBO;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
@@ -37,7 +38,7 @@ public class LoginController {
         loginDTO.setEmail(email);
         loginDTO.setSenha(senha);
 
-        boolean autenticado = loginService.autenticar(loginDTO);
+        boolean autenticado = loginBO.autenticar(loginDTO);
 
         if (autenticado) {
             // --- CORREÇÃO: CRIAR O COOKIE ---
@@ -64,7 +65,7 @@ public class LoginController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response logar(LoginDTO dto) {
 
-        Usuario usuario = usuarioService.validarLogin(dto.getEmail(), dto.getSenha());
+        Usuario usuario = usuarioBO.validarLogin(dto.getEmail(), dto.getSenha());
 
         if (usuario != null) {
             // Cria um cookie chamado "usuario_logado" com o e-mail do usuário

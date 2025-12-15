@@ -1,7 +1,7 @@
 package br.edu.ifg.luziania.controller;
 
+import br.edu.ifg.luziania.model.bo.UsuarioBO;
 import br.edu.ifg.luziania.model.dto.CadastroDTO;
-import br.edu.ifg.luziania.service.UsuarioService;
 import io.quarkus.qute.Template;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -15,7 +15,7 @@ public class CadastroController {
     Template cadastro;
 
     @Inject
-    UsuarioService usuarioService; // Injeta o serviço
+    UsuarioBO usuarioBO; // Injeta o serviço
 
     @GET
     @Produces(MediaType.TEXT_HTML)
@@ -29,7 +29,7 @@ public class CadastroController {
     public Response cadastrar(CadastroDTO dto) {
         System.out.println("Tentando cadastrar: " + dto.getEmail());
 
-        boolean sucesso = usuarioService.cadastrarUsuario(dto);
+        boolean sucesso = usuarioBO.cadastrarUsuario(dto);
 
         if (sucesso) {
             return Response.status(Response.Status.CREATED).build();
