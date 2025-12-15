@@ -20,23 +20,27 @@ public class FavoritoBO {
 
     @Transactional
     public boolean alternar(String email, FavoritoDTO dto) {
-        // Usa o DAO para buscar
+        // Busca usando o DAO
         Favorito existente = favoritoDAO.buscarPorUsuarioEMusica(email, dto.titulo, dto.id);
 
         if (existente != null) {
-            // Usa o DAO para deletar
+            // Se já existe, remove
             favoritoDAO.delete(existente);
-            return false; // Retorna false (não é mais favorito)
+            return false;
         } else {
-            // Cria e usa o DAO para salvar
+            // Se não existe, cria um novo
             Favorito novo = new Favorito();
             novo.usuarioEmail = email;
             novo.titulo = dto.titulo;
             novo.musicaId = dto.id;
             novo.artista = dto.artista;
 
+            // ✅ CORREÇÃO: Salvando os campos visuais que faltavam
+            novo.capaUrl = dto.capa;
+            novo.audioUrl = dto.src;
+
             favoritoDAO.persist(novo);
-            return true; // Retorna true (agora é favorito)
+            return true;
         }
     }
 }
