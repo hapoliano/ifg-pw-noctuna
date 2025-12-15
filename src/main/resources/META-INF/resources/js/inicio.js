@@ -37,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".music-card").forEach(card => {
       const titulo = card.querySelector("h3").textContent;
       const btn = card.querySelector(".fav-btn");
-
       if (!btn) return;
 
       if (favoritos.some(f => f.titulo === titulo)) {
@@ -55,7 +54,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const titulo = card.querySelector("h3").textContent;
       const img = card.querySelector("img")?.src;
-      const src = card.querySelector(".play-btn")?.getAttribute("data-src");
+      // Pega o src correto, seja do data-src ou de onde estiver
+      const playBtn = card.querySelector(".play-btn");
+      const src = playBtn ? playBtn.getAttribute("data-src") : "";
 
       let favoritos = carregarFavoritos();
       const jaExiste = favoritos.some(f => f.titulo === titulo);
@@ -67,85 +68,86 @@ document.addEventListener("DOMContentLoaded", () => {
         favoritos.push({ titulo, img, src });
         botao.classList.add("favorito");
       }
-
       salvarFavoritos(favoritos);
     });
   });
 
   // ===============================
-  // 🎵 PLAYER DE MÚSICAS (Corrigido)
+  // 🎵 PLAYER DE MÚSICAS
   // ===============================
-  const musicCards = document.querySelectorAll(".music-card");
+  const botoesPlay = document.querySelectorAll(".play-btn");
   let audioAtual = null;
   let botaoAtual = null;
 
-  musicCards.forEach(card => {
-    const btn = card.querySelector(".play-btn");
-    const audio = card.querySelector("audio");
-    const progressBar = card.querySelector(".progress-bar");
-    const timer = card.querySelector(".timer");
-    const src = btn.getAttribute("data-src");
+  botoesPlay.forEach(botao => {
+    botao.addEventListener("click", () => {
+      const card = botao.closest(".music-card");
+      if (!card) return;
 
-    // 1. Botão Play/Pause
-    btn.addEventListener("click", () => {
-      // Se tentar tocar uma música diferente, pausa a anterior
+      const audio = card.querySelector("audio");
+      const progressBar = card.querySelector(".progress-bar");
+      const timer = card.querySelector(".timer");
+      const src = botao.getAttribute("data-src");
+
+      if (!audio || !src) return;
+
+      // Se mudar de música, pausa a anterior
       if (audioAtual && audioAtual !== audio) {
         audioAtual.pause();
         if (botaoAtual) botaoAtual.classList.remove("tocando");
       }
 
-      // Carrega a fonte se ainda não tiver
-      if (!audio.src && src) {
+      // Carrega a nova fonte se necessário
+      if (!audio.src || audio.src !== window.location.origin + src && !audio.src.endsWith(src)) {
         audio.src = src;
       }
 
-      // Lógica de Tocar/Pausar
+      // Play/Pause
       if (audio.paused) {
-        audio.play();
-        btn.classList.add("tocando");
-        audioAtual = audio;
-        botaoAtual = btn;
+        audio.play()
+            .then(() => {
+              botao.classList.add("tocando");
+              audioAtual = audio;
+              botaoAtual = botao;
+            })
+            .catch(e => console.error("Erro ao reproduzir:", e));
       } else {
         audio.pause();
-        btn.classList.remove("tocando");
+        botao.classList.remove("tocando");
         audioAtual = null;
         botaoAtual = null;
       }
-    });
 
-    // 2. Atualizar Barra e Tempo enquanto toca
-    audio.addEventListener("timeupdate", () => {
-      if (audio.duration) {
-        // Atualiza a barra (0 a 100)
-        const progress = (audio.currentTime / audio.duration) * 100;
-        progressBar.value = progress;
+      // Atualiza a barra de progresso
+      audio.ontimeupdate = () => {
+        if (progressBar && audio.duration) {
+          const progress = (audio.currentTime / audio.duration) * 100;
+          progressBar.value = progress;
 
-        // Atualiza o texto do tempo (00:00)
-        const minutes = Math.floor(audio.currentTime / 60);
-        const seconds = Math.floor(audio.currentTime % 60);
-        timer.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+          const min = Math.floor(audio.currentTime / 60);
+          const sec = Math.floor(audio.currentTime % 60);
+          if (timer) timer.textContent = `${min}:${sec < 10 ? '0' + sec : sec}`;
+        }
+      };
+
+      // Permite arrastar a barra
+      if (progressBar) {
+        progressBar.oninput = () => {
+          if (audio.duration) {
+            audio.currentTime = (progressBar.value / 100) * audio.duration;
+          }
+        };
       }
-    });
 
-    // 3. Permitir arrastar a barra (Seek)
-    progressBar.addEventListener("input", () => {
-      if (audio.duration) {
-        const seekTime = (progressBar.value / 100) * audio.duration;
-        audio.currentTime = seekTime;
-      }
-    });
-
-    // 4. Resetar quando a música acabar
-    audio.addEventListener("ended", () => {
-      btn.classList.remove("tocando");
-      progressBar.value = 0;
-      timer.textContent = "00:00";
-      audioAtual = null;
-      botaoAtual = null;
+      // Reseta ao terminar
+      audio.onended = () => {
+        botao.classList.remove("tocando");
+        if(progressBar) progressBar.value = 0;
+        if(timer) timer.textContent = "00:00";
+      };
     });
   });
 
-  // Inicializa o estado dos favoritos ao carregar
   atualizarEstadoFavorito();
 
 });

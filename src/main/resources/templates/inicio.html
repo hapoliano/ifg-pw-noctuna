@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Biblioteca Musical | Noctuna</title>
   <link rel="stylesheet" href="/css/inicio.css">
-
   <script src="/js/inicio.js" defer></script>
 </head>
 <body>
@@ -81,6 +80,27 @@
 
       <audio></audio>
     </div>
+
+    {#for musica in musicasBanco}
+      <div class="music-card">
+        <h3>{musica.titulo}</h3>
+        <p style="font-size: 12px; color: #aaa; margin-bottom: 5px;">{musica.artista}</p>
+
+        <img src="https://via.placeholder.com/150/a855f7/ffffff?text=Noctuna" alt="{musica.titulo}">
+
+        <div class="progress-container">
+          <span class="timer">00:00</span>
+          <input type="range" class="progress-bar" value="0" min="0" max="100">
+        </div>
+
+        <div class="player-controls">
+          <button class="play-btn" data-src="/musicas-db/{musica.id}/audio"></button>
+          <button class="fav-btn"></button>
+        </div>
+
+        <audio></audio>
+      </div>
+    {/for}
 
   </div>
 </main>
