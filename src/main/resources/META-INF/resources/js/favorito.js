@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 artista: ""
             };
 
-            const resposta = await fetch('/api/favoritos', {
+            const resposta = await fetch('/favoritos', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dados)

@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       // Faz o POST para o servidor
-      const resposta = await fetch('/api/favoritos', {
+      const resposta = await fetch('/favoritos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
