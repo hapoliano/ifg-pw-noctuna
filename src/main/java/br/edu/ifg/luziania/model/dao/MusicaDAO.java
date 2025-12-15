@@ -12,4 +12,14 @@ public class MusicaDAO implements PanacheRepository<Musica> {
     public List<Musica> listarTodos() {
         return listAll();
     }
+
+    // Método para salvar
+    public void adicionar(Musica musica) {
+        persist(musica);
+    }
+
+    // Método para buscar por ID (encapsulando o Panache)
+    public Musica buscarPorId(Long id) {
+        return findById(id);
+    }
 }
