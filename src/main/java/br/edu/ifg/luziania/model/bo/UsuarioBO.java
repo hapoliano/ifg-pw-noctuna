@@ -7,6 +7,7 @@ import br.edu.ifg.luziania.model.entity.Usuario;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @ApplicationScoped
@@ -53,11 +54,90 @@ public class UsuarioBO {
         return dto;
     }
 
+    @Transactional
+    public boolean atualizarNomeCompleto(String emailLogado, String novoNome) {
+        Usuario usuario = Usuario.findByEmail(emailLogado);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        if (novoNome != null && !novoNome.trim().isEmpty()) {
+            usuario.nome = novoNome;
+            usuario.persist();
+            return true;
+        }
+        return false;
+    }
+
+    @Transactional
+    public boolean atualizarEmail(String emailLogado, String novoEmail) {
+        Usuario usuario = Usuario.findByEmail(emailLogado);
+
+        if (usuario == null || novoEmail == null || novoEmail.trim().isEmpty()) {
+            return false;
+        }
+
+        String emailAjustado = novoEmail.trim().toLowerCase();
+
+        // 1. Verificar se o novo email já existe para OUTRO usuário
+        Usuario usuarioExistente = Usuario.findByEmail(emailAjustado);
+        if (usuarioExistente != null && !usuarioExistente.id.equals(usuario.id)) {
+            // Este email já está em uso por outra conta
+            return false;
+        }
+
+        // 2. Atualizar o email
+        usuario.email = emailAjustado;
+        usuario.persist();
+
+        return true;
+    }
+
+    @Transactional
+    public boolean atualizarTelefone(String emailLogado, String novoTelefone) {
+        Usuario usuario = Usuario.findByEmail(emailLogado);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        // Se a string for vazia ou null, define o telefone como null no banco
+        usuario.telefone = novoTelefone != null && !novoTelefone.trim().isEmpty() ? novoTelefone : null;
+        usuario.persist();
+        return true;
+    }
+
+    @Transactional
+    public boolean atualizarDataNascimento(String emailLogado, String novaDataString) {
+        Usuario usuario = Usuario.findByEmail(emailLogado);
+
+        if (usuario == null) {
+            return false;
+        }
+
+        if (novaDataString == null || novaDataString.trim().isEmpty()) {
+            usuario.dataNascimento = null;
+            usuario.persist();
+            return true;
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        try {
+            LocalDate novaData = LocalDate.parse(novaDataString.trim(), formatter);
+
+            usuario.dataNascimento = novaData;
+            usuario.persist();
+            return true;
+        } catch (java.time.format.DateTimeParseException e) {
+            System.err.println("Erro ao converter data: " + e.getMessage());
+            return false;
+        }
+    }
+
     public Usuario validarLogin(String email, String senha) {
         Usuario usuario = Usuario.findByEmail(email);
 
-        // Verifica se achou o usuário e se a senha é igual
-        // Obs: Em um app real, usaríamos BCrypt para comparar hashes, não texto puro
         if (usuario != null && usuario.senha.equals(senha)) {
             return usuario;
         }
@@ -67,7 +147,6 @@ public class UsuarioBO {
     public boolean autenticar(LoginDTO dto) {
         Usuario usuario = Usuario.findByEmail(dto.getEmail());
 
-        // Verifica se o usuário existe e se a senha bate
         if (usuario != null && usuario.senha.equals(dto.getSenha())) {
             return true;
         }

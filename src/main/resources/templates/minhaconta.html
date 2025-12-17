@@ -39,33 +39,33 @@
   <div class="info-section">
     <h2>📋 Informações Pessoais</h2>
     <div class="info-grid">
-      <div class="info-item">
+      <div class="info-item" data-field="nome-completo">
         <div>
           <div class="info-label">Nome Completo</div>
-          <div class="info-value">{perfil.nomeCompleto}</div>
+          <div class="info-value" id="valor-nome-completo">{perfil.nomeCompleto}</div>
         </div>
-        <button class="edit-btn">Editar</button>
+        <button class="edit-btn" data-field="nome-completo">Editar</button>
       </div>
-      <div class="info-item">
+      <div class="info-item" data-field="email">
         <div>
           <div class="info-label">Email</div>
-          <div class="info-value">{perfil.email}</div>
+          <div class="info-value" id="valor-email">{perfil.email}</div>
         </div>
-        <button class="edit-btn">Editar</button>
+        <button class="edit-btn" data-field="email">Editar</button>
       </div>
-      <div class="info-item">
+      <div class="info-item" data-field="telefone">
         <div>
           <div class="info-label">Telefone</div>
-          <div class="info-value">{perfil.telefone}</div>
+          <div class="info-value" id="valor-telefone">{perfil.telefone}</div>
         </div>
-        <button class="edit-btn">Editar</button>
+        <button class="edit-btn" data-field="telefone">Editar</button>
       </div>
-      <div class="info-item">
+      <div class="info-item" data-field="data-nascimento">
         <div>
           <div class="info-label">Data de Nascimento</div>
-          <div class="info-value">{perfil.dataNascimento}</div>
+          <div class="info-value" id="valor-data-nascimento">{perfil.dataNascimento}</div>
         </div>
-        <button class="edit-btn">Editar</button>
+        <button class="edit-btn" data-field="data-nascimento">Editar</button>
       </div>
     </div>
   </div>
